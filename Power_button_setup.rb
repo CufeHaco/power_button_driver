@@ -10,8 +10,8 @@ class Setup
     end
     
     def update_ruby
-		a = proc{Dir.chdir("/home/pi")
-        system "sudo apt-get  install ruby"
+		a = proc{Dir.chdir("/home#{`echo $USER`}")
+        system "sudo apt-get  install ruby-full"
         sleep(1)
         system "sudo gem install rpi_gpio"}
         a.call
@@ -50,7 +50,7 @@ class Setup
 	use for your power led inicator" ; $user_pin = gets.chomp
 	
 	def create_driver
-		a = proc{Dir.chdir("/home/pi")}
+		a = proc{Dir.chdir("/home#{`echo $USER`}")}
 		b = proc{driver = File.new("Pbutton_driver.rb" , "w") ;
 		driver.puts("#!/usr/bin/env ruby
 		require 'rpi_gpio'
@@ -82,7 +82,7 @@ class Setup
 	puts "Creating .bash_aliases"
 	
 	def create_bash_alias
-	a = proc{Dir.chdir("/home/pi")}
+	a = proc{Dir.chdir("/home#{`echo &USER`}")}
 	b = proc{bash_aliases = File.new(".bash_aliases" , "w") ;
 	bash_aliases.puts("sudo ruby Pbutton_driver.rb &") ;
 	bash_aliases.close }
